@@ -162,4 +162,4 @@ Esta página está diseñada pensando en:
 
 ---
 
-**¡Disfruta tu nueva página web de crochet! 🧶✨** 
+**¡Disfruta tu nueva página!
