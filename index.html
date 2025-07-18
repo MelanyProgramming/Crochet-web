@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atelier Mely Crochet - El Arte de Tejer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <img src="Nuevo logo.png" alt="Logo Atelier Mely Crochet" class="main-logo" />
+                        <div class="logo-flower"></div>
+                    </div>
+                </div>
+                <span>Atelier Mely Crochet</span>
+                <small class="brand-tagline">El Arte de Tejer</small>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#inicio" class="nav-link">Inicio</a></li>
+                <li><a href="productos.html" class="nav-link">Productos</a></li>
+                <li><a href="#sobre-mi" class="nav-link">Sobre Mí</a></li>
+                <li><a href="#contacto" class="nav-link">Contacto</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section (Presentación/Bienvenida) -->
+    <section id="inicio" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-heart"></i>
+                <span>Hecho con Amor</span>
+            </div>
+            <h1 class="hero-title">Bienvenida a Atelier Mely Crochet</h1>
+            <p class="hero-subtitle">Descubre la belleza única de nuestros productos tejidos a crochet con amor y dedicación. Cada puntada cuenta una historia de creatividad y artesanía.</p>
+            <div class="hero-features">
+                <div class="hero-feature">
+                    <i class="fas fa-star"></i>
+                    <span>Calidad Premium</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-shipping-fast"></i>
+                    <span>Envío Rápido</span>
+                </div>
+                <div class="hero-feature">
+                    <i class="fas fa-palette"></i>
+                    <span>Diseños Únicos</span>
+                </div>
+            </div>
+            <a href="#productos" class="cta-button">
+                <span>Explorar Colección</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="hero-image">
+            <div class="floating-elements">
+                <div class="floating-item" style="--delay: 0s">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="floating-item" style="--delay: 1s">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="floating-item" style="--delay: 2s">
+                    <i class="fas fa-sparkles"></i>
+                </div>
+                <div class="floating-item" style="--delay: 3s">
+                    <i class="fas fa-yarn"></i>
+                </div>
+                <div class="floating-item" style="--delay: 4s">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="floating-item" style="--delay: 5s">
+                    <i class="fas fa-flower"></i>
+                </div>
+            </div>
+            <div class="hero-pattern">
+                <div class="pattern-circle"></div>
+                <div class="pattern-circle"></div>
+                <div class="pattern-circle"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Banner Promocional -->
+    <section class="promo-banner">
+        <div class="promo-content">
+            <i class="fas fa-gift"></i>
+            <span>¡Envío gratis en compras mayores a $50! | Productos hechos a mano con amor 💜</span>
+            <i class="fas fa-truck"></i>
+        </div>
+    </section>
+
+    <!-- Separador decorativo -->
+    <div class="svg-separator">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#paint0_linear)" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z"/><defs><linearGradient id="paint0_linear" x1="0" y1="40" x2="1440" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#e8d5f0"/><stop offset="1" stop-color="#c8a2c8"/></linearGradient></defs></svg>
+    </div>
+
+    <!-- Categorías Destacadas -->
+    <section class="featured-categories fade-in-up">
+        <div class="container">
+            <h2 class="section-title">Categorías Destacadas</h2>
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-gem"></i></div>
+                    <h3>Accesorios</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-home"></i></div>
+                    <h3>Hogar</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-tshirt"></i></div>
+                    <h3>Ropa</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon"><i class="fas fa-baby"></i></div>
+                    <h3>Bebés</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Separador decorativo -->
+    <div class="svg-separator svg-separator-bottom">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#paint0_linear)" d="M0,0 C480,80 960,-80 1440,0 L1440,80 L0,80 Z"/><defs><linearGradient id="paint0_linear" x1="0" y1="40" x2="1440" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#e8d5f0"/><stop offset="1" stop-color="#c8a2c8"/></linearGradient></defs></svg>
+    </div>
+
+    <!-- Beneficios -->
+    <section class="benefits-section fade-in-up">
+        <div class="container">
+            <h2 class="section-title">¿Por qué elegir Atelier Mely Crochet?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-illustration"><i class="fas fa-hands-holding-heart"></i></div>
+                    <h3>Hecho a Mano</h3>
+                    <p>Cada producto es tejido cuidadosamente, garantizando calidad y detalle en cada puntada.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-illustration"><i class="fas fa-leaf"></i></div>
+                    <h3>Materiales Premium</h3>
+                    <p>Utilizamos hilos y lanas de la mejor calidad, suaves, duraderos y amigables con el medio ambiente.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-illustration"><i class="fas fa-bolt"></i></div>
+                    <h3>Entrega Rápida</h3>
+                    <p>Procesamos y enviamos tus pedidos con rapidez y cuidado, para que los recibas en perfectas condiciones.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-illustration"><i class="fas fa-sparkles"></i></div>
+                    <h3>Diseños Únicos</h3>
+                    <p>Ofrecemos piezas exclusivas y personalizables, para que encuentres el detalle perfecto para ti o para regalar.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Separador decorativo -->
+    <div class="svg-separator svg-separator-bottom">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#paint0_linear)" d="M0,0 C480,80 960,-80 1440,0 L1440,80 L0,80 Z"/><defs><linearGradient id="paint0_linear" x1="0" y1="40" x2="1440" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#e8d5f0"/><stop offset="1" stop-color="#c8a2c8"/></linearGradient></defs></svg>
+    </div>
+
+    <!-- Products Section (Destacados) -->
+    <section id="productos" class="products-section fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h2 class="section-title">Productos Destacados</h2>
+                <p class="section-subtitle">Descubre lo mejor de nuestra colección</p>
+            </div>
+            <div class="products-carousel" id="productsCarousel">
+                <!-- Carrusel de productos destacados -->
+            </div>
+            <div class="see-more-container">
+                <a href="productos.html" class="cta-button see-more-btn">
+                    <span>Ver más productos</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Separador decorativo -->
+    <div class="svg-separator">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#paint0_linear)" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z"/><defs><linearGradient id="paint0_linear" x1="0" y1="40" x2="1440" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#e8d5f0"/><stop offset="1" stop-color="#c8a2c8"/></linearGradient></defs></svg>
+    </div>
+
+    <!-- Testimonios -->
+    <section class="testimonials-section fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-quote-left"></i>
+                </div>
+                <h2 class="section-title">Lo Que Dicen Mis Clientes</h2>
+                <p class="section-subtitle">Experiencias reales de clientes satisfechos con mis creaciones</p>
+            </div>
+            <div class="testimonials-grid animated-testimonials">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>"Los productos de Mely son simplemente hermosos. La calidad es excepcional y cada pieza está hecha con tanto amor. Mi bufanda favorita es de ella."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>María González</h4>
+                            <span>Cliente Frecuente</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>"Compré un set de cojines para mi sala y quedé maravillada. Los colores son perfectos y la textura es increíble. Definitivamente volveré a comprar."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Ana Rodríguez</h4>
+                            <span>Cliente Satisfecha</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <i class="fas fa-quote-left quote-icon"></i>
+                        <p>"El vestido que me hizo Mely es perfecto para el verano. Es ligero, elegante y muy cómodo. Todos me preguntan dónde lo compré."</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Carmen López</h4>
+                            <span>Cliente Feliz</span>
+                        </div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Separador decorativo -->
+    <div class="svg-separator svg-separator-bottom">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#paint0_linear)" d="M0,0 C480,80 960,-80 1440,0 L1440,80 L0,80 Z"/><defs><linearGradient id="paint0_linear" x1="0" y1="40" x2="1440" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#e8d5f0"/><stop offset="1" stop-color="#c8a2c8"/></linearGradient></defs></svg>
+    </div>
+
+    <!-- FAQ Section -->
+    <section class="faq-section fade-in-up">
+        <div class="container">
+            <h2 class="section-title">Preguntas Frecuentes</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">¿Cómo puedo hacer un pedido?<span class="faq-toggle"><i class="fas fa-chevron-down"></i></span></button>
+                    <div class="faq-answer">Puedes hacer tu pedido directamente desde la web agregando productos al carrito y completando el formulario de contacto.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Puedo personalizar un producto?<span class="faq-toggle"><i class="fas fa-chevron-down"></i></span></button>
+                    <div class="faq-answer">¡Sí! Contáctanos para solicitar colores, tamaños o detalles personalizados en tu producto.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Cuánto tarda el envío?<span class="faq-toggle"><i class="fas fa-chevron-down"></i></span></button>
+                    <div class="faq-answer">El tiempo de envío depende de tu ubicación, pero normalmente es de 3 a 7 días hábiles.</div>
+                </div>
+                <div class="faq-item">
+                    <button class="faq-question">¿Qué métodos de pago aceptan?<span class="faq-toggle"><i class="fas fa-chevron-down"></i></span></button>
+                    <div class="faq-answer">Aceptamos transferencias, tarjetas y otros métodos seguros. ¡Consúltanos para más detalles!</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Separador decorativo -->
+    <div class="svg-separator">
+        <svg viewBox="0 0 1440 80" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill="url(#paint0_linear)" d="M0,80 C480,0 960,160 1440,80 L1440,0 L0,0 Z"/><defs><linearGradient id="paint0_linear" x1="0" y1="40" x2="1440" y2="40" gradientUnits="userSpaceOnUse"><stop stop-color="#e8d5f0"/><stop offset="1" stop-color="#c8a2c8"/></linearGradient></defs></svg>
+    </div>
+
+    <!-- About Section (Sobre Mí) -->
+    <section id="sobre-mi" class="about-section fade-in-up">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <h2 class="section-title">Sobre Mí</h2>
+                <p class="section-subtitle">Conoce la historia detrás de cada puntada y el amor que pongo en cada creación</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>¡Hola! Soy Mely</h3>
+                    <p>Una artesana apasionada por el crochet con 3 años de experiencia creando piezas únicas. Cada producto que creo está tejido con amor y dedicación, usando los mejores materiales para garantizar calidad y durabilidad.</p>
+                    <p>Mi misión es crear piezas únicas que no solo sean hermosas, sino también funcionales y duraderas. Cada puntada cuenta una historia de creatividad y artesanía, transmitiendo el calor y la personalidad que solo el trabajo hecho a mano puede ofrecer.</p>
+                    <div class="about-stats">
+                        <div class="stat">
+                            <div class="stat-number">500+</div>
+                            <div class="stat-label">Productos Creados</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">300+</div>
+                            <div class="stat-label">Clientes Felices</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">5</div>
+                            <div class="stat-label">Años de Experiencia</div>
+                        </div>
+                    </div>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-heart"></i>
+                            <span>Hecho con Amor</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-star"></i>
+                            <span>Calidad Premium</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Envío Rápido</span>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-palette"></i>
+                            <span>Diseños Únicos</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-placeholder">
+                        <i class="fas fa-user-circle"></i>
+                    </div>
+                    <div class="about-decoration">
+                        <div class="decoration-circle"></div>
+                        <div class="decoration-circle"></div>
+                        <div class="decoration-circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contacto" class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Contáctame</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@crochetartesanal.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Teléfono</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Ubicación</h3>
+                            <p>Ciudad, País</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Tu nombre" required>
+                    <input type="email" placeholder="Tu email" required>
+                    <textarea placeholder="Tu mensaje" rows="5" required></textarea>
+                    <button type="submit" class="submit-btn">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shopping Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Carrito de Compras</h3>
+                <button class="close-cart" id="closeCart">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items will be displayed here -->
+            </div>
+            <div class="cart-footer">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cartTotal">$0.00</span>
+                </div>
+                <button class="checkout-btn" id="checkoutBtn">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Modal -->
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <button class="close-modal" id="closeProductModal">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="product-modal-body" id="productModalBody">
+                <!-- Product details will be displayed here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de logo grande -->
+    <div id="logoModal" class="logo-modal">
+        <div class="logo-modal-content">
+            <button class="close-logo-modal" id="closeLogoModal" aria-label="Cerrar logo grande"><i class="fas fa-times"></i></button>
+            <img src="Nuevo logo.png" alt="Logo grande Atelier Mely Crochet" class="logo-modal-img" />
+        </div>
+    </div>
+
+    <!-- Botón Ir Arriba -->
+    <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Ir arriba">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-decoration"></div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Atelier Mely Crochet</h3>
+                    <p>El Arte de Tejer - Creando belleza hecha a mano, una puntada a la vez.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="#inicio">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="#sobre-mi">Sobre Mí</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Información</h4>
+                    <ul>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Devolución</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Atelier Mely Crochet. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sparkles/Confetti container -->
+    <div id="sparkle-container"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>
