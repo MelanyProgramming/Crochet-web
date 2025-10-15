@@ -110,10 +110,17 @@ function addToCart(productId) {
         setTimeout(() => cartBtn.classList.remove('bubble'), 500);
     }
     
-    // Sparkle effect
-    const addBtn = event.target;
-    const rect = addBtn.getBoundingClientRect();
-    createSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+    // Sparkle effect (safe when no event target)
+    try {
+        const evt = window.event;
+        if (evt && evt.target && typeof evt.target.getBoundingClientRect === 'function') {
+            const rect = evt.target.getBoundingClientRect();
+            createSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        } else if (cartBtn) {
+            const rect = cartBtn.getBoundingClientRect();
+            createSparkle(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        }
+    } catch (_) {}
 }
 
 function removeFromCart(productId) {
@@ -375,16 +382,6 @@ function createProductCard(product) {
         <div class="product-image">
             <i class="fas fa-gem" style="font-size: 4rem; color: white;"></i>
         </div>
-        <div class="product-overlay">
-            <div class="overlay-buttons">
-                <button class="overlay-btn" onclick="addToCart(${product.id})">
-                    <i class="fas fa-shopping-cart"></i>
-                </button>
-                <button class="overlay-btn" onclick="showProductDetails(${product.id})">
-                    <i class="fas fa-eye"></i>
-                </button>
-            </div>
-        </div>
         <div class="product-info">
             <h3 class="product-title">${product.name}</h3>
             <p class="product-description">${product.description}</p>
@@ -394,16 +391,27 @@ function createProductCard(product) {
             </div>
             <div class="product-price">$${product.price.toFixed(2)}</div>
             <div class="product-actions">
-                <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                <button class="add-to-cart-btn" data-add-id="${product.id}">
                     <i class="fas fa-shopping-cart"></i>
                     Agregar
-                </button>
-                <button class="view-details-btn" onclick="showProductDetails(${product.id})">
-                    <i class="fas fa-eye"></i>
                 </button>
             </div>
         </div>
     `;
+
+    // Open details when clicking the card (anywhere except the add button)
+    card.addEventListener('click', () => {
+        showProductDetails(product.id);
+    });
+    
+    // Prevent card click when pressing the add button
+    const addBtn = card.querySelector('[data-add-id]');
+    if (addBtn) {
+        addBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            addToCart(product.id);
+        });
+    }
     
     return card;
 }

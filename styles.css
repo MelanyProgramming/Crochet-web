@@ -728,6 +728,7 @@ body {
     position: relative;
     overflow: hidden;
     animation: fadeInUp 1s cubic-bezier(.4,0,.2,1);
+    min-height: 220px;
 }
 
 .benefit-card:hover {
@@ -749,18 +750,21 @@ body {
     justify-content: center;
     margin: 0 auto 1rem auto;
     box-shadow: 0 2px 8px rgba(200, 162, 200, 0.10);
-    transition: background 0.3s, color 0.3s;
+    transition: background 0.3s, color 0.3s, opacity 0.3s ease, transform 0.3s ease;
 }
 
 .benefit-card:hover .benefit-illustration {
     background: var(--secondary-color);
     color: var(--white);
+    opacity: 0;
+    transform: scale(0.9);
 }
 
 .benefit-card h3 {
     color: var(--secondary-color);
     font-size: 1.2rem;
     font-weight: 600;
+    font-family: 'Quicksand', 'Poppins', sans-serif;
     margin-top: 1rem;
     letter-spacing: 0.5px;
     transition: color 0.3s;
@@ -770,11 +774,39 @@ body {
     color: var(--white);
 }
 
+/* Fade out title when revealing description */
+.benefit-card h3 {
+    transition: opacity 0.35s cubic-bezier(.4,0,.2,1), color 0.3s;
+}
+
+.benefit-card:hover h3 {
+    opacity: 0;
+}
+
 .benefit-card p {
     color: var(--text-dark);
-    opacity: 0.8;
     font-size: 1rem;
-    margin-top: 1rem;
+    font-family: 'Quicksand', 'Poppins', sans-serif;
+    margin-top: 0;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    position: absolute;
+    left: 1.2rem;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    z-index: 2;
+    pointer-events: none;
+    transition: opacity 0.35s cubic-bezier(.4,0,.2,1), max-height 0.35s cubic-bezier(.4,0,.2,1), margin-top 0.35s cubic-bezier(.4,0,.2,1);
+}
+
+/* Show description on hover only */
+.benefit-card:hover p {
+    opacity: 0.88;
+    max-height: 160px; /* enough for 2-3 lines */
+    margin-top: 0.8rem;
 }
 
 /* ========================================
@@ -1517,7 +1549,7 @@ body {
 .fade-in-up.visible {
     opacity: 1;
     transform: translateY(0);
-}
+} 
 
 /* ========================================
    RESPONSIVE DESIGN
@@ -1599,7 +1631,7 @@ body {
         width: 38px;
         height: 38px;
     }
-}
+} 
 
 /* ========================================
    MOBILE MENU STYLES
@@ -1622,4 +1654,4 @@ body {
    ======================================== */
 html {
     scroll-behavior: smooth;
-}
+} 
