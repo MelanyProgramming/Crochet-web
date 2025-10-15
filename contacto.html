@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto - Atelier Mely Crochet</title>
+
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="productos.css">
+
+    <!-- External Resources -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="navbar">
+            <div class="nav-brand">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <img src="Nuevo logo.png" alt="Logo Atelier Mely Crochet" class="main-logo" />
+                        <div class="logo-flower"></div>
+                    </div>
+                </div>
+                <span>Atelier Mely Crochet</span>
+                <small class="brand-tagline">El Arte de Tejer</small>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="productos.html" class="nav-link">Productos</a></li>
+                <li><a href="faq.html" class="nav-link">FAQ</a></li>
+                <li><a href="contacto.html" class="nav-link active">Contacto</a></li>
+            </ul>
+            <div class="nav-icons">
+                <button class="cart-btn" id="cartBtn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="menu-toggle" id="menuToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-paper-plane"></i>
+                <span>Hablemos</span>
+            </div>
+            <h1 class="hero-title">Contáctame</h1>
+            <p class="hero-subtitle">¿Tienes una idea o quieres un producto personalizado? Estoy aquí para ayudarte.</p>
+        </div>
+        <div class="hero-image">
+            <div class="floating-elements">
+                <div class="floating-item" style="--delay: 0s"><i class="fas fa-envelope"></i></div>
+                <div class="floating-item" style="--delay: 1s"><i class="fas fa-star"></i></div>
+                <div class="floating-item" style="--delay: 2s"><i class="fas fa-heart"></i></div>
+            </div>
+            <div class="hero-pattern">
+                <div class="pattern-circle"></div>
+                <div class="pattern-circle"></div>
+                <div class="pattern-circle"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <h2 class="section-title">Ponte en contacto</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@crochetartesanal.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h3>Teléfono</h3>
+                            <p>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h3>Ubicación</h3>
+                            <p>Ciudad, País</p>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form">
+                    <input type="text" placeholder="Tu nombre" required>
+                    <input type="email" placeholder="Tu email" required>
+                    <textarea placeholder="Tu mensaje" rows="5" required></textarea>
+                    <button type="submit" class="submit-btn">Enviar Mensaje</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shared Modals and UI -->
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-content">
+            <div class="cart-header">
+                <h3>Carrito de Compras</h3>
+                <button class="close-cart" id="closeCart"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="cart-items" id="cartItems"></div>
+            <div class="cart-footer">
+                <div class="cart-total"><span>Total:</span><span id="cartTotal">$0.00</span></div>
+                <button class="checkout-btn" id="checkoutBtn">Proceder al Pago</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="product-modal" id="productModal">
+        <div class="product-modal-content">
+            <button class="close-modal" id="closeProductModal"><i class="fas fa-times"></i></button>
+            <div class="product-modal-body" id="productModalBody"></div>
+        </div>
+    </div>
+
+    <div id="logoModal" class="logo-modal">
+        <div class="logo-modal-content">
+            <button class="close-logo-modal" id="closeLogoModal" aria-label="Cerrar logo grande"><i class="fas fa-times"></i></button>
+            <img src="Nuevo logo.png" alt="Logo grande Atelier Mely Crochet" class="logo-modal-img" />
+        </div>
+    </div>
+
+    <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Ir arriba"><i class="fas fa-arrow-up"></i></button>
+
+    <footer class="footer">
+        <div class="footer-decoration"></div>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Atelier Mely Crochet</h3>
+                    <p>El Arte de Tejer - Creando belleza hecha a mano, una puntada a la vez.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Enlaces Rápidos</h4>
+                    <ul>
+                        <li><a href="index.html">Inicio</a></li>
+                        <li><a href="productos.html">Productos</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="contacto.html">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Información</h4>
+                    <ul>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Términos y Condiciones</a></li>
+                        <li><a href="#">Política de Devolución</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Atelier Mely Crochet. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <div id="sparkle-container"></div>
+
+    <!-- JS Files -->
+    <script src="productos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
