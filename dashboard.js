@@ -2,6 +2,7 @@
 (function(){
     const ADMIN_KEY = 'amc_admin_unlocked';
     const STORAGE_KEY = 'amc_products';
+    const OWNER_EMAIL = (typeof window !== 'undefined' && window.AMC_OWNER_EMAIL) ? window.AMC_OWNER_EMAIL : (localStorage.getItem('amc_owner_email') || 'tu-correo@example.com');
 
     function getItems() {
         try {
@@ -141,10 +142,31 @@
         }
     }
 
+    function showBlocked(reason){
+        let blocker = document.getElementById('admin-blocked');
+        if (!blocker) {
+            blocker = document.createElement('div');
+            blocker.id = 'admin-blocked';
+            blocker.className = 'admin-login';
+            blocker.innerHTML = `<h1>Acceso restringido</h1><p class="hint">${reason}</p><div class="admin-actions"><a class="btn btn-secondary" href="index.html"><i class="fas fa-home"></i> Ir al inicio</a></div>`;
+            document.body.insertBefore(blocker, document.body.firstChild);
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function(){
-        const unlocked = localStorage.getItem(ADMIN_KEY) === '1';
         const app = document.getElementById('admin-app');
-        if (unlocked && app) {
+        const session = (window.AMCAuth && window.AMCAuth.getSession) ? window.AMCAuth.getSession() : null;
+        if (!session) {
+            if (app) app.style.display = 'none';
+            showBlocked('Inicia sesión con tu cuenta propietaria para continuar.');
+            return;
+        }
+        if (String(session.email || '').toLowerCase() !== String(OWNER_EMAIL).toLowerCase()) {
+            if (app) app.style.display = 'none';
+            showBlocked('Esta cuenta no tiene permisos para el Dashboard.');
+            return;
+        }
+        if (app) {
             app.style.display = 'block';
             bindForm();
             bindTopActions();

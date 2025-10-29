@@ -77,6 +77,22 @@ body {
     pointer-events: none;
 }
 
+/* Compact header variant (más pequeño y sin líneas) */
+.header.compact {
+    background: #ffffff;
+    border-bottom: 1px solid #eee;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+}
+.header.compact::after { display: none; }
+.header.compact .navbar { padding: 0.6rem 1rem; }
+.header.compact .nav-brand { font-size: 1.2rem; }
+.header.compact .logo-icon { width: 42px; height: 42px; animation: none; }
+.header.compact .main-logo { width: 40px; height: 40px; }
+.header.compact .brand-tagline { display: none; }
+.header.compact .nav-link { padding: 0.3rem 0.6rem; }
+.header.compact .cart-btn { font-size: 1rem; }
+.header.compact .dashboard-icon-btn { width: 36px; height: 36px; }
+
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -235,6 +251,29 @@ body {
 .cart-btn:hover {
     background: var(--light-bg);
     color: var(--secondary-color);
+}
+
+/* Dashboard icon button (owner only) */
+.dashboard-icon-btn {
+    position: relative;
+    background: var(--white);
+    border: 2px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.3rem;
+    color: var(--secondary-color);
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    transition: all 0.3s ease;
+}
+.dashboard-icon-btn:hover {
+    background: var(--light-bg);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
 }
 
 .cart-count {

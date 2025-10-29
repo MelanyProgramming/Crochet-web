@@ -30,42 +30,9 @@
         .admin-login h1 { font-size: 1.6rem; color: var(--secondary-color); margin-bottom: 12px; }
         .admin-login .hint { color: var(--text-light); font-size: 0.95rem; margin-bottom: 12px; }
     </style>
-    <script>
-        (function(){
-            const KEY = 'amc_admin_unlocked';
-            const PASS = 'mely2024'; // cámbialo cuando quieras
-            const params = new URLSearchParams(location.search);
-            const qp = params.get('k');
-            if (qp === PASS) {
-                localStorage.setItem(KEY, '1');
-            }
-            const unlocked = localStorage.getItem(KEY) === '1';
-            if (!unlocked) {
-                document.addEventListener('DOMContentLoaded', function(){
-                    const gate = document.getElementById('admin-gate');
-                    const form = document.getElementById('gate-form');
-                    if (gate && form) {
-                        gate.style.display = 'block';
-                        form.addEventListener('submit', function(e){
-                            e.preventDefault();
-                            const p = document.getElementById('gate-password').value.trim();
-                            if (p === PASS) {
-                                localStorage.setItem(KEY, '1');
-                                location.reload();
-                            } else {
-                                alert('Contraseña incorrecta');
-                            }
-                        });
-                    }
-                });
-            } else {
-                document.documentElement.setAttribute('data-admin', '1');
-            }
-        })();
-    </script>
 </head>
 <body>
-    <header class="header">
+    <header class="header compact">
         <nav class="navbar">
             <div class="nav-brand">
                 <div class="logo-container">
@@ -78,22 +45,13 @@
                 <small class="brand-tagline">Sólo para Mely</small>
             </div>
             <div class="nav-icons">
-                <a class="cta-button" href="productos.html"><span>Ver Productos</span><i class="fas fa-arrow-right"></i></a>
+                <a class="cta-button" href="index.html" style="margin-right:8px"><span>Inicio</span><i class="fas fa-home"></i></a>
+                <a class="cta-button" href="productos.html" style="margin-right:8px"><span>Ver Productos</span><i class="fas fa-arrow-right"></i></a>
+                <button id="authOpenBtn" class="auth-open-btn"><i class="fas fa-user"></i> Entrar</button>
+                <div id="authUserChip" class="auth-chip"><span class="avatar"><i class="fas fa-user"></i></span><span class="chip-name">Usuario</span><button id="logoutBtnHeader" class="btn btn-secondary" style="margin-left:8px;border:none;background:transparent;color:var(--secondary-color);cursor:pointer">Salir</button></div>
             </div>
         </nav>
     </header>
-
-    <div id="admin-gate" class="admin-login" style="display:none">
-        <h1>Acceso privado</h1>
-        <p class="hint">Ingresa tu contraseña para gestionar imágenes.</p>
-        <form id="gate-form">
-            <input type="password" id="gate-password" placeholder="Contraseña" required>
-            <div class="admin-actions">
-                <button class="btn btn-primary" type="submit"><i class="fas fa-lock"></i> Entrar</button>
-            </div>
-        </form>
-        <p class="hint">Tip: también puedes abrir con ?k=TU_CONTRASEÑA en la URL.</p>
-    </div>
 
     <main class="admin-wrapper" id="admin-app" style="display:none">
         <div class="admin-header">
@@ -123,8 +81,53 @@
 
         <div id="itemsList" class="admin-list"></div>
     </main>
+    <!-- Auth Modal -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-card">
+            <button class="auth-close" id="closeAuthModal" aria-label="Cerrar"><i class="fas fa-times"></i></button>
+            <div class="auth-visual">
+                <div>
+                    <h2>Acceso de Administradora</h2>
+                    <p>Inicia sesión con la cuenta propietaria para gestionar productos ✨</p>
+                </div>
+            </div>
+            <div class="auth-forms">
+                <div class="auth-tabs">
+                    <div id="tabLogin" class="auth-tab active">Iniciar Sesión</div>
+                    <div id="tabRegister" class="auth-tab">Crear Cuenta</div>
+                </div>
+                <div id="loginView" class="auth-view" style="display:block">
+                    <form id="loginForm" class="auth-form">
+                        <input type="email" placeholder="Correo" required>
+                        <input type="password" placeholder="Contraseña" required>
+                        <div class="auth-actions">
+                            <button type="submit" class="auth-submit">Entrar</button>
+                        </div>
+                    </form>
+                </div>
+                <div id="registerView" class="auth-view" style="display:none">
+                    <form id="registerForm" class="auth-form">
+                        <input name="name" type="text" placeholder="Nombre" required>
+                        <input type="email" placeholder="Correo" required>
+                        <input name="password" type="password" placeholder="Contraseña" required>
+                        <input name="confirm" type="password" placeholder="Confirmar contraseña" required>
+                        <div class="auth-actions">
+                            <button type="submit" class="auth-submit">Crear cuenta</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <script>
+        // Define el correo propietario explícitamente y persiste para otros scripts
+        window.AMC_OWNER_EMAIL = 'arauzmelany0@gmail.com';
+        localStorage.setItem('amc_owner_email', window.AMC_OWNER_EMAIL);
+    </script>
+    <script src="auth.js"></script>
     <script src="dashboard.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
 

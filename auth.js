@@ -2,6 +2,8 @@
 (function(){
     const USERS_KEY = 'amc_users';
     const SESSION_KEY = 'amc_auth_user';
+    const OWNER_EMAIL = (localStorage.getItem('amc_owner_email') || 'arauzmelany0@gmail.com').toLowerCase();
+    const OWNER_PASSWORD_PLAIN = 'Melycrochet2407new';
 
     function getUsers(){
         try { return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); } catch(_) { return []; }
@@ -22,18 +24,46 @@
         setTimeout(()=> { t.classList.remove('show'); setTimeout(()=> t.remove(), 300); }, 2000);
     }
 
+    function ensureOwnerAccount(){
+        // Persist owner email for other scripts
+        localStorage.setItem('amc_owner_email', OWNER_EMAIL);
+        const users = getUsers();
+        const pwdHash = hash(OWNER_PASSWORD_PLAIN);
+        const idx = users.findIndex(u => (u.email || '').toLowerCase() === OWNER_EMAIL);
+        if (idx === -1) {
+            users.push({ name: 'Mely', email: OWNER_EMAIL, password: pwdHash, createdAt: Date.now() });
+            saveUsers(users);
+        } else {
+            // Keep name, update password to the specified one
+            users[idx].password = pwdHash;
+            saveUsers(users);
+        }
+    }
+
     function updateHeaderUI(){
         const user = getSession();
         const loginBtn = document.getElementById('authOpenBtn');
         const userChip = document.getElementById('authUserChip');
+        const dashLink = document.getElementById('dashboardLink');
+        const dashIconBtn = document.getElementById('dashboardIconBtn');
         if (!loginBtn || !userChip) return;
         if (user) {
             loginBtn.style.display = 'none';
             userChip.style.display = 'inline-flex';
             userChip.querySelector('.chip-name').textContent = user.name || user.email;
+            if (dashLink) {
+                const isOwner = (user.email || '').toLowerCase() === OWNER_EMAIL;
+                dashLink.style.display = isOwner ? 'inline-flex' : 'none';
+            }
+            if (dashIconBtn) {
+                const isOwner = (user.email || '').toLowerCase() === OWNER_EMAIL;
+                dashIconBtn.style.display = isOwner ? 'inline-flex' : 'none';
+            }
         } else {
             loginBtn.style.display = 'inline-flex';
             userChip.style.display = 'none';
+            if (dashLink) dashLink.style.display = 'none';
+            if (dashIconBtn) dashIconBtn.style.display = 'none';
         }
     }
 
@@ -75,6 +105,10 @@
             const modal = document.getElementById('authModal');
             if (modal) modal.classList.remove('active');
             document.body.style.overflow = 'auto';
+            // Si es la cuenta propietaria, redirige al dashboard
+            if (email === OWNER_EMAIL) {
+                window.location.href = 'dashboard.html';
+            }
         });
         if (registerForm) registerForm.addEventListener('submit', (e)=>{
             e.preventDefault();
@@ -95,10 +129,14 @@
             const modal = document.getElementById('authModal');
             if (modal) modal.classList.remove('active');
             document.body.style.overflow = 'auto';
+            if (email === OWNER_EMAIL) {
+                window.location.href = 'dashboard.html';
+            }
         });
     }
 
     document.addEventListener('DOMContentLoaded', function(){
+        ensureOwnerAccount();
         updateHeaderUI();
         bindModal();
     });
