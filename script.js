@@ -389,6 +389,10 @@ function setupEventListeners() {
                 document.body.style.overflow = 'auto';
             }
         }
+        // Acceso rápido al dashboard: Ctrl + Alt + D
+        if ((e.ctrlKey || e.metaKey) && e.altKey && (e.key === 'd' || e.key === 'D')) {
+            window.location.href = 'dashboard.html';
+        }
     });
 }
 
