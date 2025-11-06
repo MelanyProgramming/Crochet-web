@@ -948,7 +948,8 @@ body {
 .benefit-card p {
     color: var(--text-dark);
     font-size: 1rem;
-    font-family: 'Quicksand', 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
     margin-top: 0;
     opacity: 0;
     max-height: 0;
@@ -956,7 +957,7 @@ body {
     position: absolute;
     left: 1.2rem;
     right: 1.2rem;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
     text-align: center;
     z-index: 2;
