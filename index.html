@@ -12,6 +12,10 @@
     <!-- External Resources -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- AOS - Animate On Scroll Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -53,14 +57,15 @@
 
     <!-- Hero Section -->
     <section id="inicio" class="hero">
-        <div class="hero-content">
-            <div class="hero-badge">
+        <div id="particles-js"></div>
+        <div class="hero-content" data-aos="fade-right" data-aos-duration="1200">
+            <div class="hero-badge" data-aos="zoom-in" data-aos-delay="200">
                 <i class="fas fa-heart"></i>
                 <span>Hecho con Amor</span>
             </div>
-            <h1 class="hero-title">Bienvenida a Atelier Mely Crochet</h1>
-            <p class="hero-subtitle">Descubre la belleza única de nuestros productos tejidos a crochet con amor y dedicación. Cada puntada cuenta una historia de creatividad y artesanía.</p>
-            <div class="hero-features">
+            <h1 class="hero-title" data-aos="fade-up" data-aos-delay="300">Bienvenida a Atelier Mely Crochet</h1>
+            <p class="hero-subtitle" data-aos="fade-up" data-aos-delay="400">Descubre la belleza única de nuestros productos tejidos a crochet con amor y dedicación. Cada puntada cuenta una historia de creatividad y artesanía.</p>
+            <div class="hero-features" data-aos="fade-up" data-aos-delay="500">
                 <div class="hero-feature">
                     <i class="fas fa-star"></i>
                     <span>Calidad Premium</span>
@@ -69,14 +74,17 @@
                     <i class="fas fa-shipping-fast"></i>
                     <span>Envío Rápido</span>
                 </div>
-                
+                <div class="hero-feature">
+                    <i class="fas fa-heart"></i>
+                    <span>Hecho a Mano</span>
+                </div>
             </div>
-            <a href="#productos" class="cta-button">
+            <a href="#productos" class="cta-button" data-aos="zoom-in" data-aos-delay="600">
                 <span>Explorar Colección</span>
                 <i class="fas fa-arrow-right"></i>
             </a>
         </div>
-        <div class="hero-image">
+        <div class="hero-image" data-aos="fade-left" data-aos-duration="1200">
             <div class="floating-elements">
                 <div class="floating-item" style="--delay: 0s">
                     <i class="fas fa-heart"></i>
@@ -130,23 +138,27 @@
     <!-- Categorías Destacadas -->
     <section class="featured-categories fade-in-up">
         <div class="container">
-            <h2 class="section-title">Categorías Destacadas</h2>
+            <h2 class="section-title" data-aos="fade-up">Categorías Destacadas</h2>
             <div class="categories-grid">
-                <div class="category-card">
+                <div class="category-card" data-aos="flip-left" data-aos-delay="100">
                     <div class="category-icon"><i class="fas fa-gem"></i></div>
                     <h3>Accesorios</h3>
+                    <div class="category-shine"></div>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-aos="flip-left" data-aos-delay="200">
                     <div class="category-icon"><i class="fas fa-home"></i></div>
                     <h3>Hogar</h3>
+                    <div class="category-shine"></div>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-aos="flip-left" data-aos-delay="300">
                     <div class="category-icon"><i class="fas fa-tshirt"></i></div>
                     <h3>Ropa</h3>
+                    <div class="category-shine"></div>
                 </div>
-                <div class="category-card">
+                <div class="category-card" data-aos="flip-left" data-aos-delay="400">
                     <div class="category-icon"><i class="fas fa-baby"></i></div>
                     <h3>Bebés</h3>
+                    <div class="category-shine"></div>
                 </div>
             </div>
         </div>
@@ -168,24 +180,26 @@
     <!-- Beneficios -->
     <section class="benefits-section fade-in-up">
         <div class="container">
-            <h2 class="section-title">¿Por qué elegir Atelier Mely Crochet?</h2>
+            <h2 class="section-title" data-aos="fade-up">¿Por qué elegir Atelier Mely Crochet?</h2>
             <div class="benefits-grid">
-                <div class="benefit-card">
+                <div class="benefit-card" data-aos="zoom-in" data-aos-delay="100">
                     <div class="benefit-illustration"><i class="fas fa-hands-holding-heart"></i></div>
                     <h3>Hecho a Mano</h3>
                     <p>Cada producto es tejido cuidadosamente, garantizando calidad y detalle en cada puntada.</p>
+                    <div class="benefit-glow"></div>
                 </div>
-                <div class="benefit-card">
+                <div class="benefit-card" data-aos="zoom-in" data-aos-delay="200">
                     <div class="benefit-illustration"><i class="fas fa-leaf"></i></div>
                     <h3>Materiales Premium</h3>
                     <p>Utilizamos hilos y lanas de la mejor calidad, suaves, duraderos y amigables con el medio ambiente.</p>
+                    <div class="benefit-glow"></div>
                 </div>
-                <div class="benefit-card">
+                <div class="benefit-card" data-aos="zoom-in" data-aos-delay="300">
                     <div class="benefit-illustration"><i class="fas fa-bolt"></i></div>
                     <h3>Entrega Rápida</h3>
                     <p>Procesamos y enviamos tus pedidos con rapidez y cuidado, para que los recibas en perfectas condiciones.</p>
+                    <div class="benefit-glow"></div>
                 </div>
-                
             </div>
         </div>
     </section>
@@ -206,17 +220,17 @@
     <!-- Products Section (Destacados) -->
     <section id="productos" class="products-section fade-in-up">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <div class="section-icon">
                     <i class="fas fa-gem"></i>
                 </div>
                 <h2 class="section-title">Productos Destacados</h2>
                 <p class="section-subtitle">Descubre lo mejor de nuestra colección</p>
             </div>
-            <div class="products-carousel" id="productsCarousel">
+            <div class="products-carousel" id="productsCarousel" data-aos="fade-up" data-aos-delay="200">
                 <!-- Carrusel de productos destacados -->
             </div>
-            <div class="see-more-container">
+            <div class="see-more-container" data-aos="zoom-in" data-aos-delay="400">
                 <a href="productos.html" class="cta-button see-more-btn">
                     <span>Ver más productos</span>
                     <i class="fas fa-arrow-right"></i>
@@ -241,7 +255,7 @@
     <!-- Testimonios -->
     <section class="testimonials-section fade-in-up">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <div class="section-icon">
                     <i class="fas fa-quote-left"></i>
                 </div>
@@ -249,7 +263,7 @@
                 <p class="section-subtitle">Experiencias reales de clientes satisfechos con mis creaciones</p>
             </div>
             <div class="testimonials-grid animated-testimonials">
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-right" data-aos-delay="100">
                     <div class="testimonial-content">
                         <i class="fas fa-quote-left quote-icon"></i>
                         <p>"Los productos de Mely son simplemente hermosos. La calidad es excepcional y cada pieza está hecha con tanto amor. Mi bufanda favorita es de ella."</p>
@@ -271,7 +285,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
                     <div class="testimonial-content">
                         <i class="fas fa-quote-left quote-icon"></i>
                         <p>"Compré un set de cojines para mi sala y quedé maravillada. Los colores son perfectos y la textura es increíble. Definitivamente volveré a comprar."</p>
@@ -293,7 +307,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="testimonial-card">
+                <div class="testimonial-card" data-aos="fade-left" data-aos-delay="300">
                     <div class="testimonial-content">
                         <i class="fas fa-quote-left quote-icon"></i>
                         <p>"El vestido que me hizo Mely es perfecto para el verano. Es ligero, elegante y muy cómodo. Todos me preguntan dónde lo compré."</p>
@@ -362,7 +376,7 @@
     <!-- About Section -->
     <section id="sobre-mi" class="about-section fade-in-up">
         <div class="container">
-            <div class="section-header">
+            <div class="section-header" data-aos="fade-up">
                 <div class="section-icon">
                     <i class="fas fa-heart"></i>
                 </div>
@@ -370,40 +384,40 @@
                 <p class="section-subtitle">Conoce la historia detrás de cada puntada y el amor que pongo en cada creación</p>
             </div>
             <div class="about-content">
-                <div class="about-text">
+                <div class="about-text" data-aos="fade-right" data-aos-delay="200">
                     <h3>¡Hola! Soy Mely</h3>
                     <p>Una artesana apasionada por el crochet con 3 años de experiencia creando piezas únicas. Cada producto que creo está tejido con amor y dedicación, usando los mejores materiales para garantizar calidad y durabilidad.</p>
                     <p>Mi misión es crear piezas únicas que no solo sean hermosas, sino también funcionales y duraderas. Cada puntada cuenta una historia de creatividad y artesanía, transmitiendo el calor y la personalidad que solo el trabajo hecho a mano puede ofrecer.</p>
                     <div class="about-stats">
-                        <div class="stat">
-                            <div class="stat-number">500+</div>
+                        <div class="stat" data-aos="zoom-in" data-aos-delay="300">
+                            <div class="stat-number" data-count="500">0</div>
                             <div class="stat-label">Productos Creados</div>
                         </div>
-                        <div class="stat">
-                            <div class="stat-number">300+</div>
+                        <div class="stat" data-aos="zoom-in" data-aos-delay="400">
+                            <div class="stat-number" data-count="300">0</div>
                             <div class="stat-label">Clientes Felices</div>
                         </div>
-                        <div class="stat">
-                            <div class="stat-number">5</div>
+                        <div class="stat" data-aos="zoom-in" data-aos-delay="500">
+                            <div class="stat-number" data-count="5">0</div>
                             <div class="stat-label">Años de Experiencia</div>
                         </div>
                     </div>
                     <div class="features">
-                        <div class="feature">
+                        <div class="feature" data-aos="fade-up" data-aos-delay="600">
                             <i class="fas fa-heart"></i>
                             <span>Hecho con Amor</span>
                         </div>
-                        <div class="feature">
+                        <div class="feature" data-aos="fade-up" data-aos-delay="700">
                             <i class="fas fa-star"></i>
                             <span>Calidad Premium</span>
                         </div>
-                        <div class="feature">
+                        <div class="feature" data-aos="fade-up" data-aos-delay="800">
                             <i class="fas fa-shipping-fast"></i>
                             <span>Envío Rápido</span>
                         </div>
                     </div>
                 </div>
-                <div class="about-image">
+                <div class="about-image" data-aos="fade-left" data-aos-delay="300">
                     <div class="image-placeholder">
                         <i class="fas fa-user-circle"></i>
                     </div>
@@ -563,8 +577,19 @@
     </div>
 
     <!-- JavaScript Files -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="productos.js"></script>
     <script src="auth.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            easing: 'ease-in-out-cubic',
+            once: true,
+            offset: 100,
+            delay: 100
+        });
+    </script>
 </body>
 </html>

@@ -32,9 +32,11 @@
         if (!container) return;
         const items = getItems();
         container.innerHTML = '';
-        items.forEach(item => {
+        items.forEach((item, index) => {
             const card = document.createElement('div');
             card.className = 'admin-card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.setAttribute('data-aos-delay', (index * 50).toString());
             const img = document.createElement('img');
             img.src = item.imageDataUrl;
             img.alt = item.title || 'Producto';
@@ -44,16 +46,22 @@
             h4.textContent = item.title || 'Sin título';
             const row = document.createElement('div');
             row.className = 'row';
-            row.innerHTML = `<span>${formatPrice(item.price)}</span><span>${item.category}</span>`;
+            row.innerHTML = `<span><strong>${formatPrice(item.price)}</strong></span><span style="background: var(--light-bg); padding: 4px 10px; border-radius: 8px; font-weight: 600; color: var(--secondary-color);">${item.category}</span>`;
             const actions = document.createElement('div');
             actions.className = 'card-actions';
             const del = document.createElement('button');
             del.className = 'btn btn-secondary';
             del.innerHTML = '<i class="fas fa-trash"></i> Eliminar';
+            del.style.width = '100%';
             del.addEventListener('click', () => {
-                const next = getItems().filter(x => x.id !== item.id);
-                saveItems(next);
-                renderList();
+                if (confirm('¿Estás segura de eliminar este producto?')) {
+                    card.style.animation = 'fadeOut 0.3s ease';
+                    setTimeout(() => {
+                        const next = getItems().filter(x => x.id !== item.id);
+                        saveItems(next);
+                        renderList();
+                    }, 300);
+                }
             });
             actions.appendChild(del);
             meta.appendChild(h4);
@@ -62,6 +70,8 @@
                 const d = document.createElement('div');
                 d.style.color = 'var(--text-light)';
                 d.style.fontSize = '0.9rem';
+                d.style.marginTop = '8px';
+                d.style.lineHeight = '1.5';
                 d.textContent = item.description;
                 meta.appendChild(d);
             }
@@ -171,6 +181,12 @@
             bindForm();
             bindTopActions();
             renderList();
+            // Re-initialize AOS after rendering
+            setTimeout(() => {
+                if (typeof AOS !== 'undefined') {
+                    AOS.refresh();
+                }
+            }, 100);
         }
     });
 })();

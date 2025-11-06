@@ -307,10 +307,23 @@ body {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(90deg, #c8a2c8 0%, #e8d5f0 100%);
+    background: linear-gradient(135deg, #c8a2c8 0%, #e8d5f0 50%, #d4b8d9 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
     position: relative;
     overflow: hidden;
     padding: 2rem 0;
+}
+
+/* Particles.js container */
+#particles-js {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.6;
 }
 
 .hero::before {
@@ -329,6 +342,18 @@ body {
     position: relative;
     text-align: left;
     margin: 0 0 0 8vw;
+    animation: heroFadeIn 1.2s ease;
+}
+
+@keyframes heroFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
 
 .hero-title {
@@ -697,6 +722,8 @@ body {
     position: relative;
     overflow: hidden;
     animation: fadeInUp 1s cubic-bezier(.4,0,.2,1);
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .category-card:hover {
@@ -739,6 +766,25 @@ body {
     color: var(--white);
 }
 
+/* Category shine effect */
+.category-shine {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    transform: rotate(45deg);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.category-card:hover .category-shine {
+    opacity: 1;
+    animation: shineSweep 1s ease;
+}
+
 /* ========================================
    BENEFITS SECTION
    ======================================== */
@@ -768,6 +814,8 @@ body {
     overflow: hidden;
     animation: fadeInUp 1s cubic-bezier(.4,0,.2,1);
     min-height: 220px;
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .benefit-card:hover {
@@ -848,6 +896,27 @@ body {
     margin-top: 0.8rem;
 }
 
+/* Benefit glow effect */
+.benefit-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(155, 107, 158, 0.3) 0%, transparent 70%);
+    transition: width 0.5s ease, height 0.5s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.benefit-card:hover .benefit-glow {
+    width: 200px;
+    height: 200px;
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
 /* ========================================
    TESTIMONIALS SECTION
    ======================================== */
@@ -873,6 +942,7 @@ body {
     opacity: 0;
     transform: translateY(40px) scale(0.98);
     animation: fadeInUp 1.1s cubic-bezier(.4,0,.2,1) forwards;
+    transform-style: preserve-3d;
 }
 
 .testimonial-card::before {
@@ -1093,6 +1163,12 @@ body {
     font-weight: 700;
     color: var(--secondary-color);
     margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.stat:hover .stat-number {
+    transform: scale(1.1);
+    color: var(--accent-color);
 }
 
 .stat-label {
@@ -1629,6 +1705,22 @@ body {
 @keyframes popInModal {
     from { opacity: 0; transform: scale(0.85); }
     to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes shineSweep {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+    50% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
 }
 
 /* ========================================

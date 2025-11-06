@@ -8,27 +8,47 @@
     <link rel="stylesheet" href="productos.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Dancing+Script:wght@400;600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
-        .admin-wrapper { max-width: 900px; margin: 120px auto 60px; padding: 24px; background: #fff; border: 1px solid var(--border-color); border-radius: 16px; box-shadow: var(--shadow); }
-        .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
-        .admin-title { font-size: 1.4rem; color: var(--secondary-color); font-weight: 700; }
-        .admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 12px; }
+        .admin-wrapper { max-width: 1000px; margin: 120px auto 60px; padding: 32px; background: linear-gradient(135deg, #fff 0%, #faf8fc 100%); border: 1px solid var(--border-color); border-radius: 24px; box-shadow: 0 8px 32px rgba(155, 107, 158, 0.12); position: relative; overflow: hidden; }
+        .admin-wrapper::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient); }
+        .admin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 2px solid var(--border-color); }
+        .admin-title { font-size: 1.6rem; color: var(--secondary-color); font-weight: 700; display: flex; align-items: center; gap: 12px; }
+        .admin-title::before { content: '✨'; font-size: 1.4rem; }
+        .admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; padding: 24px; background: #fff; border-radius: 16px; box-shadow: 0 4px 16px rgba(200, 162, 200, 0.08); transition: box-shadow 0.3s ease; }
+        .admin-form:hover { box-shadow: 0 8px 24px rgba(155, 107, 158, 0.12); }
         .admin-form .full { grid-column: 1 / -1; }
-        .admin-form input, .admin-form textarea, .admin-form select { padding: 12px; border: 2px solid var(--border-color); border-radius: 10px; font-family: inherit; }
-        .admin-actions { display: flex; gap: 12px; margin-top: 8px; }
-        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 10px; border: none; cursor: pointer; font-weight: 600; box-shadow: var(--shadow); }
+        .admin-form input, .admin-form textarea, .admin-form select { padding: 14px 16px; border: 2px solid var(--border-color); border-radius: 12px; font-family: inherit; transition: all 0.3s ease; background: var(--light-bg); }
+        .admin-form input:focus, .admin-form textarea:focus, .admin-form select:focus { outline: none; border-color: var(--secondary-color); box-shadow: 0 0 0 3px rgba(155, 107, 158, 0.1); background: #fff; }
+        .admin-actions { display: flex; gap: 12px; margin-top: 12px; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 20px; border-radius: 12px; border: none; cursor: pointer; font-weight: 600; box-shadow: var(--shadow); transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; border-radius: 50%; background: rgba(255,255,255,0.3); transform: translate(-50%, -50%); transition: width 0.6s, height 0.6s; }
+        .btn:hover::before { width: 300px; height: 300px; }
         .btn-primary { background: var(--gradient); color: #fff; }
-        .btn-secondary { background: var(--light-bg); color: var(--secondary-color); }
-        .admin-list { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-        .admin-card { border: 1px solid var(--border-color); border-radius: 14px; overflow: hidden; background: #fff; box-shadow: var(--shadow); display: flex; flex-direction: column; }
-        .admin-card img { width: 100%; height: 180px; object-fit: cover; }
-        .admin-card .meta { padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
-        .admin-card .meta h4 { font-size: 1rem; color: var(--text-dark); }
-        .admin-card .meta .row { display: flex; justify-content: space-between; color: var(--text-light); font-size: 0.9rem; }
-        .admin-card .meta .card-actions { display: flex; gap: 8px; margin-top: 8px; }
-        .admin-login { max-width: 420px; margin: 140px auto; background: #fff; padding: 24px; border: 1px solid var(--border-color); border-radius: 16px; box-shadow: var(--shadow); }
-        .admin-login h1 { font-size: 1.6rem; color: var(--secondary-color); margin-bottom: 12px; }
-        .admin-login .hint { color: var(--text-light); font-size: 0.95rem; margin-bottom: 12px; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(155, 107, 158, 0.2); }
+        .btn-secondary { background: var(--light-bg); color: var(--secondary-color); border: 2px solid var(--border-color); }
+        .btn-secondary:hover { background: var(--white); transform: translateY(-2px); box-shadow: 0 4px 16px rgba(155, 107, 158, 0.15); }
+        .admin-list { margin-top: 32px; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .admin-card { border: 2px solid var(--border-color); border-radius: 18px; overflow: hidden; background: #fff; box-shadow: 0 4px 16px rgba(200, 162, 200, 0.08); display: flex; flex-direction: column; transition: all 0.3s ease; position: relative; }
+        .admin-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient); opacity: 0; transition: opacity 0.3s ease; }
+        .admin-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 12px 32px rgba(155, 107, 158, 0.18); border-color: var(--accent-color); }
+        .admin-card:hover::before { opacity: 1; }
+        .admin-card img { width: 100%; height: 200px; object-fit: cover; transition: transform 0.3s ease; }
+        .admin-card:hover img { transform: scale(1.1); }
+        .admin-card .meta { padding: 16px; display: flex; flex-direction: column; gap: 8px; }
+        .admin-card .meta h4 { font-size: 1.1rem; color: var(--text-dark); font-weight: 600; }
+        .admin-card .meta .row { display: flex; justify-content: space-between; color: var(--text-light); font-size: 0.95rem; }
+        .admin-card .meta .card-actions { display: flex; gap: 8px; margin-top: 12px; }
+        .admin-login { max-width: 480px; margin: 140px auto; background: linear-gradient(135deg, #fff 0%, #faf8fc 100%); padding: 32px; border: 1px solid var(--border-color); border-radius: 24px; box-shadow: 0 8px 32px rgba(155, 107, 158, 0.12); position: relative; overflow: hidden; }
+        .admin-login::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--gradient); }
+        .admin-login h1 { font-size: 1.8rem; color: var(--secondary-color); margin-bottom: 12px; font-weight: 700; }
+        .admin-login .hint { color: var(--text-light); font-size: 1rem; margin-bottom: 20px; line-height: 1.6; }
+        @keyframes fadeOut {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.9); }
+        }
+        .admin-card img { position: relative; }
+        .admin-card img::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.1)); }
     </style>
 </head>
 <body>
@@ -53,8 +73,8 @@
         </nav>
     </header>
 
-    <main class="admin-wrapper" id="admin-app" style="display:none">
-        <div class="admin-header">
+    <main class="admin-wrapper" id="admin-app" style="display:none" data-aos="fade-up" data-aos-duration="800">
+        <div class="admin-header" data-aos="fade-down" data-aos-delay="100">
             <div class="admin-title">Gestor de Imágenes / Productos</div>
             <div class="admin-actions">
                 <button id="logoutBtn" class="btn btn-secondary"><i class="fas fa-sign-out-alt"></i> Salir</button>
@@ -62,9 +82,9 @@
             </div>
         </div>
 
-        <form id="productForm" class="admin-form">
+        <form id="productForm" class="admin-form" data-aos="zoom-in" data-aos-delay="200">
             <input class="full" type="file" id="imageInput" accept="image/*" required>
-            <input type="text" id="titleInput" placeholder="Título" required>
+            <input type="text" id="titleInput" placeholder="Título del producto" required>
             <input type="text" id="priceInput" placeholder="Precio (ej: 12.50)" required>
             <select id="categoryInput">
                 <option value="accesorios">Accesorios</option>
@@ -72,9 +92,9 @@
                 <option value="ropa">Ropa</option>
                 <option value="bebes">Bebés</option>
             </select>
-            <textarea class="full" id="descInput" placeholder="Descripción (opcional)"></textarea>
+            <textarea class="full" id="descInput" placeholder="Descripción del producto (opcional)" rows="3"></textarea>
             <div class="admin-actions full">
-                <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar</button>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-plus"></i> Agregar Producto</button>
                 <button type="button" id="previewBtn" class="btn btn-secondary"><i class="fas fa-eye"></i> Vista previa</button>
             </div>
         </form>
@@ -125,9 +145,19 @@
         window.AMC_OWNER_EMAIL = 'arauzmelany0@gmail.com';
         localStorage.setItem('amc_owner_email', window.AMC_OWNER_EMAIL);
     </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="auth.js"></script>
     <script src="dashboard.js"></script>
     <script src="script.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out-cubic',
+            once: true,
+            offset: 50
+        });
+    </script>
 </body>
 </html>
 
