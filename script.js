@@ -459,6 +459,72 @@ function animateCounters() {
 }
 
 // ========================================
+// SCROLL INDICATOR
+// ========================================
+function setupScrollIndicator() {
+    const indicator = document.createElement('div');
+    indicator.className = 'scroll-indicator';
+    document.body.appendChild(indicator);
+    
+    const updateIndicator = throttle(() => {
+        const windowHeight = window.innerHeight;
+        const documentHeight = document.documentElement.scrollHeight;
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
+        indicator.style.width = scrollPercent + '%';
+    }, 10);
+    
+    window.addEventListener('scroll', updateIndicator);
+}
+
+// ========================================
+// FLOATING DECORATIVE ELEMENTS
+// ========================================
+function createFloatingDecoratives() {
+    const icons = ['✨', '💜', '⭐', '💎', '🌸', '🦋'];
+    const container = document.body;
+    
+    for (let i = 0; i < 6; i++) {
+        const element = document.createElement('div');
+        element.className = 'floating-decorative';
+        element.textContent = icons[i];
+        element.style.fontSize = '2rem';
+        element.style.left = Math.random() * 100 + '%';
+        element.style.top = Math.random() * 100 + '%';
+        element.style.animationDelay = (i * 2) + 's';
+        element.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(element);
+    }
+}
+
+// ========================================
+// ENHANCED MOUSE EFFECTS
+// ========================================
+function setupMouseEffects() {
+    const elements = document.querySelectorAll('.cta-button, .category-card, .benefit-card, .product-card');
+    
+    elements.forEach(element => {
+        element.addEventListener('mousemove', (e) => {
+            const rect = element.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const rotateX = (y - centerY) / 10;
+            const rotateY = (centerX - x) / 10;
+            
+            element.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+        });
+        
+        element.addEventListener('mouseleave', () => {
+            element.style.transform = '';
+        });
+    });
+}
+
+// ========================================
 // INITIALIZATION
 // ========================================
 function initializeApp() {
@@ -477,6 +543,9 @@ function initializeApp() {
     setupFormHandling();
     setupParticles();
     animateCounters();
+    setupScrollIndicator();
+    createFloatingDecoratives();
+    setupMouseEffects();
     
     // Initialize products if the function exists
     setTimeout(() => {
