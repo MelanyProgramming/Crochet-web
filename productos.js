@@ -159,7 +159,7 @@
     function renderFeatured(){
         const carousel = document.getElementById('productsCarousel');
         if (!carousel) return;
-        const items = getItems().slice(0, 6);
+        const items = getItems().slice(0, 3);
         carousel.innerHTML = '';
         
         if (items.length === 0) {
@@ -168,7 +168,7 @@
                 { title: 'Bufanda de Crochet', price: '25.00', category: 'accesorios', description: 'Bufanda suave y cálida tejida a mano', id: 'placeholder-1' },
                 { title: 'Cojín Decorativo', price: '18.50', category: 'hogar', description: 'Cojín decorativo para tu hogar', id: 'placeholder-2' },
                 { title: 'Vestido Veraniego', price: '35.00', category: 'ropa', description: 'Vestido ligero y cómodo', id: 'placeholder-3' },
-                { title: 'Set para Bebé', price: '28.00', category: 'bebes', description: 'Set completo para bebé', id: 'placeholder-4' }
+              //  { title: 'Set para Bebé', price: '28.00', category: 'bebes', description: 'Set completo para bebé', id: 'placeholder-4' }
             ];
             placeholderProducts.forEach((item, index) => {
                 const card = createCard(item, index);

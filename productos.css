@@ -407,47 +407,20 @@
 /* ========================================
    PRODUCTS CAROUSEL
    ======================================== */
+/* Misma estética, sin scroll */
 .products-carousel {
     display: flex;
+    justify-content: center;
     gap: 2rem;
-    overflow-x: auto;
+    flex-wrap: wrap;      /* Permite que las tarjetas se ajusten en filas */
+    overflow: visible;    /* Ya no hay scroll horizontal */
     padding-bottom: 1rem;
-    scroll-snap-type: x mandatory;
     margin-bottom: 2rem;
 }
 
 .products-carousel .product-card {
-    min-width: 300px;
-    max-width: 320px;
+    width: 300px;         /* Mantiene el tamaño original */
     flex: 0 0 auto;
-    scroll-snap-align: start;
-}
-
-.see-more-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 1.5rem;
-}
-
-.see-more-btn {
-    font-size: 1.1rem;
-    padding: 1rem 2.5rem;
-    background: var(--gradient);
-    color: var(--white);
-    border: none;
-    border-radius: 30px;
-    box-shadow: var(--shadow);
-    transition: all 0.3s ease;
-    display: inline-flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.see-more-btn:hover {
-    background: var(--secondary-color);
-    color: var(--white);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
 }
 
 /* ========================================
