@@ -1,6 +1,9 @@
 /* Productos dinámicos desde localStorage */
 (function(){
     const STORAGE_KEY = 'amc_products';
+    const MODAL_ID = 'productModal';
+    const MODAL_BODY_ID = 'productModalBody';
+    const MODAL_CLOSE_ID = 'closeProductModal';
 
     function getItems() {
         try {
@@ -15,6 +18,60 @@
     function money(v){
         const n = Number(v);
         return isNaN(n) ? v : `$${n.toFixed(2)}`;
+    }
+
+    function formatCategory(cat = '') {
+        if (!cat) return 'General';
+        const map = {
+            accesorios: 'Accesorios',
+            hogar: 'Hogar',
+            ropa: 'Ropa',
+            bebes: 'Bebés'
+        };
+        return map[cat.toLowerCase()] || cat.charAt(0).toUpperCase() + cat.slice(1);
+    }
+
+    let modalBound = false;
+
+    function getModalElements(){
+        return {
+            modal: document.getElementById(MODAL_ID),
+            body: document.getElementById(MODAL_BODY_ID),
+            closeBtn: document.getElementById(MODAL_CLOSE_ID)
+        };
+    }
+
+    function closeProductModal(){
+        const { modal } = getModalElements();
+        if (modal) {
+            modal.classList.remove('active');
+            modal.setAttribute('aria-hidden', 'true');
+        }
+        document.body.style.overflow = '';
+    }
+
+    function bindProductModal(){
+        if (modalBound) return;
+        const { modal, closeBtn } = getModalElements();
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeProductModal();
+            });
+        }
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeProductModal();
+                }
+            });
+        }
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeProductModal();
+            }
+        });
+        modalBound = true;
     }
 
     function createCard(item, index = 0){
@@ -81,8 +138,67 @@
     }
     
     function showProductDetails(item) {
-        // This would open a modal with product details
-        console.log('View product:', item);
+        const { modal, body } = getModalElements();
+        if (!modal || !body) return;
+        const hasImage = item.imageDataUrl && item.imageDataUrl.trim() !== '';
+        const colors = Array.isArray(item.colors) ? item.colors : [];
+        const extraDetails = [
+            { label: 'Categoría', value: formatCategory(item.category) },
+            item.material ? { label: 'Material', value: item.material } : null,
+            item.size ? { label: 'Tamaño', value: item.size } : null
+        ].filter(Boolean).map(detail => `<p><strong>${detail.label}:</strong> ${detail.value}</p>`).join('');
+        const colorsHTML = colors.length ? `
+            <div class="product-modal-colors">
+                ${colors.map(color => `<span class="color-dot" style="background:${color}" title="${color}"></span>`).join('')}
+            </div>
+        ` : '';
+        const imageHTML = hasImage
+            ? `<img src="${item.imageDataUrl}" alt="${(item.title || 'Producto').replace(/"/g,'&quot;')}" loading="lazy">`
+            : `<div class="icon-placeholder"><i class="fas fa-gem"></i></div>`;
+
+        body.innerHTML = `
+            <div class="product-modal-details">
+                <div>
+                    <div class="product-modal-image">
+                        ${imageHTML}
+                    </div>
+                </div>
+                <div class="product-modal-info">
+                    <h2>${item.title || 'Producto sin título'}</h2>
+                    <p>${item.description || 'Este producto no tiene una descripción detallada aún, pero es tan bello como siempre.'}</p>
+                    ${extraDetails}
+                    ${colorsHTML}
+                    <div class="product-modal-price">${money(item.price)}</div>
+                    <div class="product-modal-actions">
+                        <button class="primary" data-action="add-to-cart">
+                            <i class="fas fa-shopping-cart"></i> Agregar al carrito
+                        </button>
+                        <button class="secondary" data-action="close-modal">
+                            Seguir explorando
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        const addBtn = body.querySelector('[data-action="add-to-cart"]');
+        if (addBtn) {
+            addBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                addToCart(item);
+            });
+        }
+        const closeBtn = body.querySelector('[data-action="close-modal"]');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                closeProductModal();
+            });
+        }
+
+        modal.classList.add('active');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
     }
     
     function addToCart(item) {
@@ -190,6 +306,7 @@
     }
 
     window.initProducts = function(){
+        bindProductModal();
         renderGrid();
         renderFeatured();
     }

@@ -15,7 +15,12 @@
     }
 
     function saveItems(items) {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+        } catch (e) {
+            console.error('Error guardando storage', e);
+            throw e;
+        }
     }
 
     function uid() {
@@ -82,6 +87,46 @@
         });
     }
 
+    function readFileAsDataUrl(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = evt => resolve(String(evt.target.result));
+            reader.onerror = () => reject(new Error('No se pudo leer la imagen'));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async function optimizeImage(file) {
+        const dataUrl = await readFileAsDataUrl(file);
+        return new Promise((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => {
+                let { width, height } = img;
+                const maxSize = 1080;
+                if (width > maxSize || height > maxSize) {
+                    const scale = Math.min(maxSize / width, maxSize / height);
+                    width = Math.round(width * scale);
+                    height = Math.round(height * scale);
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = width;
+                canvas.height = height;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, width, height);
+                const isPng = file.type === 'image/png';
+                const mime = isPng ? 'image/png' : 'image/jpeg';
+                const quality = isPng ? 0.9 : 0.75;
+                try {
+                    resolve(canvas.toDataURL(mime, quality));
+                } catch (err) {
+                    reject(err);
+                }
+            };
+            img.onerror = reject;
+            img.src = dataUrl;
+        });
+    }
+
     function bindForm() {
         const form = document.getElementById('productForm');
         const imageInput = document.getElementById('imageInput');
@@ -97,25 +142,33 @@
             e.preventDefault();
             const file = imageInput.files && imageInput.files[0];
             if (!file) { alert('Selecciona una imagen'); return; }
-            const reader = new FileReader();
-            reader.onload = function(evt){
-                const imageDataUrl = String(evt.target.result);
-                const items = getItems();
-                items.unshift({
-                    id: uid(),
-                    title: titleInput.value.trim(),
-                    price: priceInput.value.trim(),
-                    category: categoryInput.value,
-                    description: descInput.value.trim(),
-                    imageDataUrl,
-                    createdAt: Date.now()
-                });
+            let imageDataUrl;
+            try {
+                imageDataUrl = await optimizeImage(file);
+            } catch (err) {
+                console.error('No se pudo optimizar la imagen', err);
+                alert('No se pudo procesar la imagen. Intenta con otra o reduce su tamaño.');
+                return;
+            }
+            const items = getItems();
+            items.unshift({
+                id: uid(),
+                title: titleInput.value.trim(),
+                price: priceInput.value.trim(),
+                category: categoryInput.value,
+                description: descInput.value.trim(),
+                imageDataUrl,
+                createdAt: Date.now()
+            });
+            try {
                 saveItems(items);
-                form.reset();
-                renderList();
-                alert('Producto agregado');
-            };
-            reader.readAsDataURL(file);
+            } catch (err) {
+                alert('El almacenamiento del navegador está lleno. Elimina algunos productos o limpia los datos para continuar.');
+                return;
+            }
+            form.reset();
+            renderList();
+            alert('Producto agregado');
         });
 
         if (previewBtn) {
