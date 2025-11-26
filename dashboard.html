@@ -145,6 +145,15 @@
         window.AMC_OWNER_EMAIL = 'arauzmelany0@gmail.com';
         localStorage.setItem('amc_owner_email', window.AMC_OWNER_EMAIL);
     </script>
+    <!-- Firebase SDK (versión compat para evitar errores de módulos) -->
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+    <!-- Image Storage usando IndexedDB (gratis, mucho espacio) -->
+    <script src="image-storage.js"></script>
+    <!-- Firebase Configuration and Sync -->
+    <script src="firebase-config.js"></script>
+    <script src="firebase-sync.js"></script>
+    <!-- Other Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="auth.js"></script>
     <script src="dashboard.js"></script>

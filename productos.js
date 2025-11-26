@@ -1,13 +1,17 @@
-/* Productos dinámicos desde localStorage */
+/* Productos dinámicos desde localStorage/Firebase */
 (function(){
-    const STORAGE_KEY = 'amc_products';
     const MODAL_ID = 'productModal';
     const MODAL_BODY_ID = 'productModalBody';
     const MODAL_CLOSE_ID = 'closeProductModal';
 
-    function getItems() {
+    // Usar el sistema de sincronización Firebase
+    async function getItems() {
+        if (window.getProducts) {
+            return await window.getProducts();
+        }
+        // Fallback si el sistema de sincronización no está disponible
         try {
-            const raw = localStorage.getItem(STORAGE_KEY);
+            const raw = localStorage.getItem('amc_products');
             return raw ? JSON.parse(raw) : [];
         } catch (e) {
             console.error('Error leyendo productos', e);
@@ -80,9 +84,14 @@
         card.setAttribute('data-category', item.category || 'todos');
         card.setAttribute('data-aos', 'fade-up');
         card.setAttribute('data-aos-delay', (index * 100).toString());
-        const hasImage = item.imageDataUrl && item.imageDataUrl.trim() !== '';
+        // Determinar si tiene imagen
+        const hasImage = (item.imageUrl && item.imageUrl.trim() !== '') || 
+                        (item.imageDataUrl && item.imageDataUrl.trim() !== '') || 
+                        item.imageInIndexedDB;
+        
+        // Crear placeholder inicial
         const imageHTML = hasImage 
-            ? `<img src="${item.imageDataUrl}" alt="${(item.title||'Producto').replace(/"/g,'&quot;')}" loading="lazy">`
+            ? `<img data-product-id="${item.id}" data-in-indexeddb="${item.imageInIndexedDB ? 'true' : 'false'}" src="" alt="${(item.title||'Producto').replace(/"/g,'&quot;')}" loading="lazy" style="opacity:0;transition:opacity 0.3s;">`
             : `<div class="product-placeholder">
                 <i class="fas fa-gem"></i>
                 <div class="placeholder-shine"></div>
@@ -114,6 +123,48 @@
             </div>
         `;
         
+        // Cargar imagen
+        const img = card.querySelector('img[data-product-id]');
+        if (img && hasImage) {
+            // Si tiene imageUrl (URL externa), usarla directamente
+            if (item.imageUrl && item.imageUrl.startsWith('http')) {
+                img.src = item.imageUrl;
+                img.style.opacity = '1';
+            }
+            // Si está marcada como en IndexedDB, cargarla desde ahí
+            else if (item.imageInIndexedDB && window.getProductImage) {
+                window.getProductImage(item.id).then(imageDataUrl => {
+                    if (imageDataUrl) {
+                        img.src = imageDataUrl;
+                        img.style.opacity = '1';
+                    } else {
+                        // Si no se encuentra en IndexedDB, intentar con imageDataUrl directo
+                        if (item.imageDataUrl) {
+                            img.src = item.imageDataUrl;
+                            img.style.opacity = '1';
+                        } else {
+                            // Mostrar placeholder si no hay imagen
+                            img.parentElement.innerHTML = '<div class="product-placeholder"><i class="fas fa-gem"></i><div class="placeholder-shine"></div></div>';
+                        }
+                    }
+                }).catch(err => {
+                    console.warn('Error cargando imagen de IndexedDB:', err);
+                    // Fallback a imageDataUrl si está disponible
+                    if (item.imageDataUrl) {
+                        img.src = item.imageDataUrl;
+                        img.style.opacity = '1';
+                    } else {
+                        img.parentElement.innerHTML = '<div class="product-placeholder"><i class="fas fa-gem"></i><div class="placeholder-shine"></div></div>';
+                    }
+                });
+            }
+            // Si tiene imageDataUrl directo, usarlo
+            else if (item.imageDataUrl && item.imageDataUrl.trim() !== '') {
+                img.src = item.imageDataUrl;
+                img.style.opacity = '1';
+            }
+        }
+        
         // Add click handlers
         const viewBtn = card.querySelector('.view-btn');
         const cartBtn = card.querySelector('.cart-btn-overlay, .add-to-cart-btn');
@@ -140,7 +191,10 @@
     function showProductDetails(item) {
         const { modal, body } = getModalElements();
         if (!modal || !body) return;
-        const hasImage = item.imageDataUrl && item.imageDataUrl.trim() !== '';
+        const hasImage = (item.imageUrl && item.imageUrl.trim() !== '') || 
+                        (item.imageDataUrl && item.imageDataUrl.trim() !== '') || 
+                        item.imageInIndexedDB;
+        
         const colors = Array.isArray(item.colors) ? item.colors : [];
         const extraDetails = [
             { label: 'Categoría', value: formatCategory(item.category) },
@@ -153,7 +207,7 @@
             </div>
         ` : '';
         const imageHTML = hasImage
-            ? `<img src="${item.imageDataUrl}" alt="${(item.title || 'Producto').replace(/"/g,'&quot;')}" loading="lazy">`
+            ? `<img data-product-id="${item.id}" src="" alt="${(item.title || 'Producto').replace(/"/g,'&quot;')}" loading="lazy" style="opacity:0;transition:opacity 0.3s;">`
             : `<div class="icon-placeholder"><i class="fas fa-gem"></i></div>`;
 
         body.innerHTML = `
@@ -180,6 +234,43 @@
                 </div>
             </div>
         `;
+
+        // Cargar imagen en el modal
+        const modalImg = body.querySelector('img[data-product-id]');
+        if (modalImg && hasImage) {
+            // Si tiene imageUrl (URL externa), usarla directamente
+            if (item.imageUrl && item.imageUrl.startsWith('http')) {
+                modalImg.src = item.imageUrl;
+                modalImg.style.opacity = '1';
+            }
+            // Si está marcada como en IndexedDB, cargarla desde ahí
+            else if (item.imageInIndexedDB && window.getProductImage) {
+                window.getProductImage(item.id).then(imageDataUrl => {
+                    if (imageDataUrl) {
+                        modalImg.src = imageDataUrl;
+                        modalImg.style.opacity = '1';
+                    } else {
+                        // Si no se encuentra en IndexedDB, intentar con imageDataUrl directo
+                        if (item.imageDataUrl) {
+                            modalImg.src = item.imageDataUrl;
+                            modalImg.style.opacity = '1';
+                        }
+                    }
+                }).catch(err => {
+                    console.warn('Error cargando imagen de IndexedDB:', err);
+                    // Fallback a imageDataUrl si está disponible
+                    if (item.imageDataUrl) {
+                        modalImg.src = item.imageDataUrl;
+                        modalImg.style.opacity = '1';
+                    }
+                });
+            }
+            // Si tiene imageDataUrl directo, usarlo
+            else if (item.imageDataUrl && item.imageDataUrl.trim() !== '') {
+                modalImg.src = item.imageDataUrl;
+                modalImg.style.opacity = '1';
+            }
+        }
 
         const addBtn = body.querySelector('[data-action="add-to-cart"]');
         if (addBtn) {
@@ -222,10 +313,10 @@
         }, 3000);
     }
 
-    function renderGrid() {
+    async function renderGrid() {
         const grid = document.getElementById('productsGrid');
         if (!grid) return;
-        const items = getItems();
+        const items = await getItems();
         grid.innerHTML = '';
         
         if (items.length === 0) {
@@ -272,10 +363,10 @@
         });
     }
 
-    function renderFeatured(){
+    async function renderFeatured(){
         const carousel = document.getElementById('productsCarousel');
         if (!carousel) return;
-        const items = getItems().slice(0, 3);
+        const items = (await getItems()).slice(0, 3);
         carousel.innerHTML = '';
         
         if (items.length === 0) {
@@ -305,10 +396,19 @@
         }
     }
 
-    window.initProducts = function(){
+    window.initProducts = async function(){
         bindProductModal();
-        renderGrid();
-        renderFeatured();
+        await renderGrid();
+        await renderFeatured();
+        
+        // Escuchar actualizaciones de productos en tiempo real
+        window.addEventListener('productsUpdated', async (event) => {
+            await renderGrid();
+            await renderFeatured();
+            if (typeof AOS !== 'undefined') {
+                AOS.refresh();
+            }
+        });
     }
 })();
 
