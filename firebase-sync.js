@@ -22,20 +22,25 @@
     // Función para guardar productos en localStorage
     function saveItemsToLocal(items) {
         try {
-            // Optimizar: no guardar imageDataUrl en localStorage (se guarda en IndexedDB)
-            // Solo guardar un marcador que indique que la imagen está en IndexedDB
+            // Optimizar: mantener imageDataUrl como respaldo incluso si está en IndexedDB
+            // Esto asegura que las imágenes funcionen en navegadores nuevos o después de limpiar caché
             const optimizedItems = items.map(item => {
                 const optimized = { ...item };
-                // Si tiene imageDataUrl (base64), no guardarlo en localStorage
-                // Se guardará en IndexedDB y solo guardamos un marcador
+                // Si tiene imageDataUrl (base64), mantenerlo como respaldo
+                // Aunque también esté en IndexedDB, lo guardamos por si IndexedDB está vacío
                 if (optimized.imageDataUrl && optimized.imageDataUrl.startsWith('data:')) {
-                    // Marcar que la imagen está en IndexedDB
+                    // Marcar que la imagen está en IndexedDB (para uso preferencial)
                     optimized.imageInIndexedDB = true;
-                    // No guardar el base64 completo en localStorage
-                    delete optimized.imageDataUrl;
+                    // MANTENER imageDataUrl como respaldo (no eliminarlo)
+                    // Solo comprimir si es muy grande (>500KB)
+                    if (optimized.imageDataUrl.length > 500000) {
+                        // Si es muy grande, intentar mantener solo una versión pequeña
+                        // Por ahora, lo mantenemos completo para evitar problemas
+                    }
                 }
-                // Si tiene imageUrl (de Firebase Storage), mantenerlo
+                // Si tiene imageUrl (URL externa), mantenerlo y eliminar imageDataUrl
                 if (optimized.imageUrl && optimized.imageUrl.startsWith('http')) {
+                    // Si tiene URL externa, no necesitamos el base64
                     delete optimized.imageDataUrl;
                 }
                 return optimized;
@@ -46,6 +51,21 @@
             return true;
         } catch (e) {
             console.error('Error guardando en localStorage', e);
+            // Si falla por tamaño, intentar sin imageDataUrl como último recurso
+            if (e.name === 'QuotaExceededError') {
+                console.warn('⚠️ localStorage lleno, intentando guardar sin imágenes base64...');
+                const itemsWithoutImages = items.map(item => {
+                    const itemCopy = { ...item };
+                    if (itemCopy.imageDataUrl && itemCopy.imageDataUrl.startsWith('data:')) {
+                        itemCopy.imageInIndexedDB = true;
+                        delete itemCopy.imageDataUrl; // Solo eliminar si realmente no cabe
+                    }
+                    return itemCopy;
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(itemsWithoutImages));
+                localStorage.setItem(SYNC_KEY, Date.now().toString());
+                return true;
+            }
             throw e;
         }
     }
@@ -93,20 +113,19 @@
     
     // Función para convertir producto a formato Firestore
     function productToFirestore(product) {
-        // Para Firestore, podemos guardar imageDataUrl si es pequeño, o solo un marcador
-        // Las imágenes grandes se guardan en IndexedDB localmente
+        // Para Firestore, guardar imageDataUrl completo si está disponible
+        // Esto permite sincronización entre dispositivos
         return {
             id: product.id,
             title: product.title || '',
             price: product.price || '0',
             category: product.category || 'accesorios',
             description: product.description || '',
-            // Solo guardar imageDataUrl en Firestore si es pequeño (< 100KB aprox)
-            // Para imágenes grandes, solo guardar un marcador
-            imageDataUrl: (product.imageDataUrl && product.imageDataUrl.length < 100000) 
-                ? product.imageDataUrl 
-                : (product.imageInIndexedDB ? 'INDEXEDDB' : ''),
+            // Guardar imageDataUrl completo en Firestore para sincronización
+            // Si es muy grande, Firestore lo rechazará, pero intentamos guardarlo
+            imageDataUrl: product.imageDataUrl || (product.imageInIndexedDB ? 'INDEXEDDB' : ''),
             imageUrl: product.imageUrl || '',
+            imageInIndexedDB: product.imageInIndexedDB || false,
             createdAt: product.createdAt || Date.now(),
             updatedAt: Date.now()
         };
@@ -117,10 +136,13 @@
         const data = doc.data();
         // Priorizar imageUrl sobre imageDataUrl
         const imageUrl = data.imageUrl || '';
-        const imageDataUrl = data.imageDataUrl || '';
+        let imageDataUrl = data.imageDataUrl || '';
         
-        // Si imageDataUrl es 'INDEXEDDB', marcar que está en IndexedDB
-        const imageInIndexedDB = imageDataUrl === 'INDEXEDDB';
+        // Si imageDataUrl es 'INDEXEDDB', marcar que está en IndexedDB pero sin data
+        const imageInIndexedDB = imageDataUrl === 'INDEXEDDB' || data.imageInIndexedDB === true;
+        if (imageDataUrl === 'INDEXEDDB') {
+            imageDataUrl = ''; // No hay data disponible, solo marcador
+        }
         
         return {
             id: data.id || doc.id,
@@ -129,7 +151,7 @@
             category: data.category || 'accesorios',
             description: data.description || '',
             imageUrl: imageUrl,
-            imageDataUrl: (imageInIndexedDB || !imageDataUrl) ? '' : imageDataUrl,
+            imageDataUrl: imageDataUrl, // Mantener si está disponible
             imageInIndexedDB: imageInIndexedDB,
             createdAt: data.createdAt || Date.now(),
             updatedAt: data.updatedAt || Date.now()
